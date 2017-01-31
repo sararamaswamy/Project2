@@ -23,6 +23,7 @@ import re
 def parse_counted_words(lin):
 
     y = re.findall(r'(\d+) (\D?[a-zA-Z]+)\b', lin) ## r means raw data. if you don't have r, backslash means data corrector 
+    ## look for 1 or more digits then space then look for 0 OR 1 non alphabetic characters then alphabetic characters of any length ONLY NOT alphanumeric!! then match the end of a word
     if len(y) == 0:
         return None
     ## if everything is normal, continues executing 
