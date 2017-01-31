@@ -21,7 +21,7 @@ import re
 ## Write code to define your parse_counted_words function here.
 
 def parse_counted_words(lin):
-    y = re.findall('(\d*) (\w*)', lin)
+    y = re.findall('(\d*) (\w*)[^\w]', lin)
     desired_tuple = {}
     for each_tuple in y:
         desired_tuple = each_tuple
@@ -42,7 +42,7 @@ def parse_counted_words(lin):
         # print(extract)
 
 ##
-# print(parse_counted_words("5 watermelons, 13 pineapples, and 1 papaya."))
+print(parse_counted_words("5 watermelons, 13 pineapples, and 1 papaya."))
 
 
 	#for loop to loop through string 
