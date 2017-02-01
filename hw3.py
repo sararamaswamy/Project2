@@ -2,9 +2,9 @@ import unittest
 import re
 
 ## SI 206 - W17 - HW3
-## COMMENT WITH:
-## Your section day/time:
-## Any names of people you worked with on this assignment:
+## COMMENT WITH: Sara Ramaswamy
+## Your section day/time: Thursday 6-7 PM
+## Any names of people you worked with on this assignment: 
 
 #####################
 
@@ -45,7 +45,6 @@ def parse_counted_words(lin):
         # extraction_bit = re.findall([0-9], x)
         # return extraction_bit
         # x =
-       
 
         # desired_value = ""
         # for match in re.search((\d) (\w*), lin):
@@ -56,7 +55,7 @@ def parse_counted_words(lin):
         # print(extract)
 
 ##
-print(parse_counted_words("5 watermelons, 13 pineapples, and 1 papaya."))
+# Testing print statement: print(parse_counted_words("5 watermelons, 13 pineapples, and 1 papaya."))
 
 
 	#for loop to loop through string 
@@ -75,16 +74,53 @@ print(parse_counted_words("5 watermelons, 13 pineapples, and 1 papaya."))
 
 ## (a) Write Python code to determine how many of these paths identify FILES, not directories. Save that number in the variable file_paths_num.
 ## acumulator, return the count() value of that accumulator
+##files  ends in a alphabetical character, also have slash followed by alphabetical 
+
+
+file = open('computer_paths.txt')
+file_paths_num = 0 
+for line in file:
+    line = line.rstrip()
+    y = re.findall(r'[.](\w+)', line) ## This is a correct way to parse it
+    if len(y) > 0:
+        file_paths_num = file_paths_num +1
+
+# file_paths_num = len(y) ## 16
+
 
 ## (b) Write Python code to determine how many of these paths are FULL paths, not relative paths. Save that number in the variable full_paths_num.
 ## full path accumulator count()
+file2 = open('computer_paths.txt')
+full_paths_num = 0
+for line in file2:
+    line = line.rstrip()
+    z = re.findall(r'[^.]([\W?][\W?][a-zA-Z])', line)
+    if len(z) > 0:
+        full_paths_num = full_paths_num +1 ## 16
 
 ## (c) Write Python code to determine how many of these paths describe a Python file saved inside a folder called SI206. Save that number in the variable python_course_paths.
 ##see if inside folder, accumualator, return count
+## must be a file format AFTER SI206 APPEARS
+## Two Capital letters then three numbers then slash then text then file name (ends in two lowercase letters because of .py at the end 
+file3 = open('computer_paths.txt')
+python_course_paths= 0
+for line in file:
+    line = line.rstrip()
+    w = re.findall(r'[A-Z][A-Z][\d][\d][\d]/.+[.][a-z][a-z]\b', line)
+    if len(w) > 0:
+        python_course_paths = python_course_paths + 1 ##3
 
 ## (d) Write Python code to determine how many of these paths describe a Microsoft file (a file that EITHER ends with .docx OR .xlsx, but nothing else counts) where the file name ends in a digit. Save that total in the variable microsoft_files_num.
 
 ## see if it ends in alphabetical characters with periods with number of letters followed by a number followed by a period followed by an x, accumulator, return count 
+## microsoft file AND file name ends in a digit!
+file4 = open('computer_paths.txt')
+microsoft_files_num = 0 
+for line in file:
+    line = line.rstrip()
+    x = re.re.findall(r'[\d][.]\w+[x]', file4)
+    if len(x) > 0:
+        microsoft_files_num = microsoft_files_num + 1 ##3 
 
 
 
@@ -112,15 +148,15 @@ class Part1_HW3(unittest.TestCase):
     def test_pcw_8(self):
         self.assertEqual(parse_counted_words("!!!!! 72 and 76 calendars"),('76',"calendars"))
 
-# class Part2_HW3(unittest.TestCase):
-#     def test_cpaths_1(self):
-#         self.assertEqual(file_paths_num,16)
-#     def test_cpaths_2(self):
-#         self.assertEqual(full_paths_num,16)
-#     def test_cpaths_3(self):
-#         self.assertEqual(python_course_paths,3)
-#     def test_cpaths_4(self):
-#         self.assertEqual(microsoft_files_num,3)
+class Part2_HW3(unittest.TestCase):
+    def test_cpaths_1(self):
+        self.assertEqual(file_paths_num,16)
+    def test_cpaths_2(self):
+        self.assertEqual(full_paths_num,16)
+    def test_cpaths_3(self):
+        self.assertEqual(python_course_paths,3)
+    def test_cpaths_4(self):
+        self.assertEqual(microsoft_files_num,3)
 
 
 if __name__ == "__main__":
