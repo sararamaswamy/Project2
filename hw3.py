@@ -104,7 +104,7 @@ for line in file2:
 ## Two Capital letters then three numbers then slash then text then file name (ends in two lowercase letters because of .py at the end 
 file3 = open('computer_paths.txt')
 python_course_paths= 0
-for line in file:
+for line in file3:
     line = line.rstrip()
     w = re.findall(r'[A-Z][A-Z][\d][\d][\d]/.+[.][a-z][a-z]\b', line)
     if len(w) > 0:
@@ -116,9 +116,9 @@ for line in file:
 ## microsoft file AND file name ends in a digit!
 file4 = open('computer_paths.txt')
 microsoft_files_num = 0 
-for line in file:
+for line in file4:
     line = line.rstrip()
-    x = re.re.findall(r'[\d][.]\w+[x]', file4)
+    x = re.findall(r'([\d][.]\w+[x])', file4)
     if len(x) > 0:
         microsoft_files_num = microsoft_files_num + 1 ##3 
 
