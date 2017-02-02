@@ -77,7 +77,7 @@ def parse_counted_words(lin):
 ##files  ends in a alphabetical character, also have slash followed by alphabetical 
 
 
-file = open('computer_paths.txt')
+file = open('computer_paths.txt') ## Done
 file_paths_num = 0 
 for line in file:
     line = line.rstrip()
@@ -90,7 +90,7 @@ for line in file:
 
 ## (b) Write Python code to determine how many of these paths are FULL paths, not relative paths. Save that number in the variable full_paths_num.
 ## full path accumulator count()
-file2 = open('computer_paths.txt')
+file2 = open('computer_paths.txt') ## Returns 0
 full_paths_num = 0
 for line in file2:
     line = line.rstrip()
@@ -102,7 +102,7 @@ for line in file2:
 ##see if inside folder, accumualator, return count
 ## must be a file format AFTER SI206 APPEARS
 ## Two Capital letters then three numbers then slash then text then file name (ends in two lowercase letters because of .py at the end 
-file3 = open('computer_paths.txt')
+file3 = open('computer_paths.txt') ## Done
 python_course_paths= 0
 for line in file3:
     line = line.rstrip()
@@ -114,11 +114,11 @@ for line in file3:
 
 ## see if it ends in alphabetical characters with periods with number of letters followed by a number followed by a period followed by an x, accumulator, return count 
 ## microsoft file AND file name ends in a digit!
-file4 = open('computer_paths.txt')
+file4 = open('computer_paths.txt') ##Done
 microsoft_files_num = 0 
 for line in file4:
     line = line.rstrip()
-    x = re.findall(r'([\d][.]\w+[x])', file4)
+    x = re.findall(r'([\d][.]\w+[x])', line)
     if len(x) > 0:
         microsoft_files_num = microsoft_files_num + 1 ##3 
 
