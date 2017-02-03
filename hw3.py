@@ -94,9 +94,11 @@ file2 = open('computer_paths.txt') ## Returns 0
 full_paths_num = 0
 for line in file2:
     line = line.rstrip()
-    z = re.findall(r'[^.]([\W?][\W?][a-zA-Z])', line)
+    z = re.findall(r'(^~?/)', line)
     if len(z) > 0:
         full_paths_num = full_paths_num +1 ## 16
+
+# [\W?][\W+].*)
 
 ## (c) Write Python code to determine how many of these paths describe a Python file saved inside a folder called SI206. Save that number in the variable python_course_paths.
 ##see if inside folder, accumualator, return count
