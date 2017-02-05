@@ -13,15 +13,31 @@ from bs4 import BeautifulSoup
 ## PART 1 (100 points) - Get the HTML data from http://www.nytimes.com (the New York Times home page) and save it in a file called nytimes_data.html.
 
 ## Write the Python code to do so here.
+base_url = 'http://www.nytimes.com'
+r = requests.get(base_url)
+soup = BeautifulSoup(r.text, "lxml")
 
-
+# ny_times_file = open("nytimes_data.html", "w")
+# ny_times_file.write(soup)
 
 
 #####################
 
 ## PART 2 (200 points)
 ## Write code to get the first 10 headlines from the New York Times, based on the data you saved in the file in Part 1, and save those strings in a list called nytimes_headlines. 
-
+nytimes_headlines = []
+headline_count = 0
+for story_heading in soup.find_all(class_="story-heading"): 
+    if story_heading.a: 
+    	if headline_count < 10:
+        	nytimes_headlines.append(story_heading.a.text.replace("\n", " ").strip())
+        	headline_count = headline_count  + 1
+    else: 
+    	if headline_count < 10:
+        	nytimes_headlines.append(story_heading.contents[0].strip())
+        	headline_count = headline_count + 1 
+print(nytimes_headlines)
+print(headline_count)
 ## Note that you will almost certainly need to do some investigation on the http://nytimes.com website to do this correctly, even after saving the file in Part 1.
 
 ## The strings that should be elements of your lists will be different depending upon when you accessed the data, but they should probably be somewhat like this:
