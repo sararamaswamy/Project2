@@ -25,6 +25,7 @@ soup = BeautifulSoup(r.text, "lxml")
 
 ## PART 2 (200 points)
 ## Write code to get the first 10 headlines from the New York Times, based on the data you saved in the file in Part 1, and save those strings in a list called nytimes_headlines. 
+## My progress: Complete. Returns list of the first 10 headlines from the New York Times and creates a list of them 
 nytimes_headlines = []
 headline_count = 0
 for story_heading in soup.find_all(class_="story-heading"): 
@@ -36,8 +37,9 @@ for story_heading in soup.find_all(class_="story-heading"):
     	if headline_count < 10:
         	nytimes_headlines.append(story_heading.contents[0].strip())
         	headline_count = headline_count + 1 
-print(nytimes_headlines)
-print(headline_count)
+# print(nytimes_headlines)
+# print(headline_count)
+# print(len(nytimes_headlines)) ##Passes 10 headlines in the list test
 ## Note that you will almost certainly need to do some investigation on the http://nytimes.com website to do this correctly, even after saving the file in Part 1.
 
 ## The strings that should be elements of your lists will be different depending upon when you accessed the data, but they should probably be somewhat like this:
@@ -70,6 +72,9 @@ print(headline_count)
 ## Use the requests library (or other Python code that has the same effect) and Beautiful Soup to gather, from that web page, each of the names and the titles.
 ## You should create a dictionary called umsi_titles which contains the names and the titles for each person on that page. For example, your dictionary should include the following key-value pairs (and a bunch more...):
 
+##look through for h2, store to key, under property = "dc: title"
+## then look through for class = "field-item even" 
+
 ## "Lindsay Blackwell":"PhD Student"
 ## "Reginald Beasley":"Admissions and Student Affairs Assistant"
 ## "Daniel Atkins III":"Professor Emeritus of Information, School of Information and Professor Emeritus of Electrical Engineering and Computer Science, College of Engineering"
@@ -81,21 +86,45 @@ print(headline_count)
 response = requests.get("https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All")
 htmldoc = response.text
 
-soup = BeautifulSoup(htmldoc,"html.parser")
-people = soup.find_all("div",{"class":"views-row"})
+soup = BeautifulSoup(htmldoc,"html.parser") ## parses/organizes using Beautiful soup by tags
+people = soup.find_all("div",{"class":"views-row"})  #searches for the div tags within the 
+# for element in people:
+# person = soup.find_all("div",{"class":"field-item even"})
+person = soup.find_all("div", class_= "field-item even", property="dc:title")
 umsi_titles = {}
+for element in person:
+	if element not in umsi_titles:
+		umsi_titles[element] = 0 ## put the grab the description here 
+	umsi_titles[element] = umsi_titles[element] + 1
+	# print(element) 
+
+
+position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
+for element in position:
+	print(element)
+# print(person)
+
+
+# print(person)
+
+
+#if something .next sibling = "property = "dc:title" 
+# for child in people.children:
+# 	print(child)
+
+# print(person)
+
 
 ## It may be helpful to translate the following from English to code:
 
 ## For each element in the list saved in the variable people,
+# for person in people: 
 ## Find the container that holds the name that belongs to that person (HINT: look for something unique, like a property element...)
+##class = "field-item even" proprty = "dc: title"
 ## Find the container that holds the title that belongs to that person (HINT: a class name)
+## class = "field-item even"
 ## Grab the text of each of those elements and put them in the dictionary umsi_titles properly
-
-
-
-
-
+## take each of those things (person.property and person.)
 
 
 
