@@ -92,12 +92,13 @@ people = soup.find_all("div",{"class":"views-row"})  #searches for the div tags 
 # person = soup.find_all("div",{"class":"field-item even"})
 person = soup.find_all("div", class_= "field-item even", property="dc:title")
 umsi_titles = {}
-for element in person:
-	if element not in umsi_titles:
-		umsi_titles[element] = 0 ## put the grab the description here 
-	umsi_titles[element] = umsi_titles[element] + 1
+# for element in person:
+# 	if element not in umsi_titles:
+# 		# position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
+# 		for element in position:
+# 			umsi_titles[element] = position 
+# 			# umsi_titles[element] = umsi_titles[element] 
 	# print(element) 
-
 
 position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
 for element in position:
