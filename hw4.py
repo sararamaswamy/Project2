@@ -115,12 +115,24 @@ for element in person:
 
 # print(umsi_titles)
 
-# print(umsi_titles)
 position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
 for thing in position:
 	y = thing.find_all(class_="field-item even")
-	print(y)
+	x = str(y)
+	no_div = re.findall(r'"field-item even">(.+)<', x)
+	# print(no_div)
+	for desc in no_div:
+		if desc not in descrip_list:
+			descrip_list.append(desc)
+# print(descrip_list)
+# print(descrip_list)
 
+##create the dictionary
+print(names_list)
+print(descrip_list)
+# umsi_titles = dict(zip(names_list, descrip_list))
+# print(umsi_titles)
+# print(len(umsi_titles))
 
 # for element in position:
 	# print(element)
