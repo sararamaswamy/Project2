@@ -93,18 +93,35 @@ people = soup.find_all("div",{"class":"views-row"})  #searches for the div tags 
 # person = soup.find_all("div",{"class":"field-item even"})
 person = soup.find_all("div", class_= "field-item even", property="dc:title")
 umsi_titles = {}
+names_list = []
+descrip_list = [] 
 val = 0
+
+##creates a list of the names 
 for element in person:
 	# y = re.findall(r'(<h2>[\w] [w\]', str(element.h2)
 	# for item in y:
-	y = element.h2
-	x = str(y)
-	no_h2 = re.findall(r'\w+ \w+', x)
-	print(no_h2)
+	y = element.h2 ## gets all the names with h2 tags on either side
+	x = str(y) ## makes all of those strings that can be used in a regex
+	no_h2 = re.findall(r'\w+ \w+', x) ## uses regex to get list of the names from between the tags
+	for name in no_h2:
+		if name not in names_list:
+			names_list.append(name)
+# print(names_list)
+
+## Creates a list of the descriptions
+
+
 
 # print(umsi_titles)
 
+# print(umsi_titles)
 position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
+for thing in position:
+	y = thing.find_all(class_="field-item even")
+	print(y)
+
+
 # for element in position:
 	# print(element)
 
