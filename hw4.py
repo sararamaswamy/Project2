@@ -103,7 +103,7 @@ for element in person:
 	# for item in y:
 	y = element.h2 ## gets all the names with h2 tags on either side
 	x = str(y) ## makes all of those strings that can be used in a regex
-	no_h2 = re.findall(r'\w+ \w+', x) ## uses regex to get list of the names from between the tags
+	no_h2 = re.findall(r'\w+ \w+\s*\w+-*\w*', x) ## uses regex to get list of the names from between the tags ##ask at office hours how to regex this so it's less hard coded
 	for name in no_h2:
 		if name not in names_list:
 			names_list.append(name)
@@ -136,7 +136,7 @@ for thing in position:
 # print(descrip_list)
 # print(len(descrip_list))
 umsi_titles = dict(zip(names_list, descrip_list))
-print(umsi_titles)
+
 # print(len(umsi_titles))
 
 # for element in position:
