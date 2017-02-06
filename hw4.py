@@ -1,5 +1,6 @@
 import unittest
 import requests
+import re
 from bs4 import BeautifulSoup
 
 
@@ -92,17 +93,21 @@ people = soup.find_all("div",{"class":"views-row"})  #searches for the div tags 
 # person = soup.find_all("div",{"class":"field-item even"})
 person = soup.find_all("div", class_= "field-item even", property="dc:title")
 umsi_titles = {}
-# for element in person:
-# 	if element not in umsi_titles:
-# 		# position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
-# 		for element in position:
-# 			umsi_titles[element] = position 
-# 			# umsi_titles[element] = umsi_titles[element] 
-	# print(element) 
+val = 0
+for element in person:
+	# y = re.findall(r'(<h2>[\w] [w\]', str(element.h2)
+	# for item in y:
+	y = element.h2
+	x = str(y)
+	no_h2 = re.findall(r'\w+ \w+', x)
+	print(no_h2)
+
+# print(umsi_titles)
 
 position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
-for element in position:
-	print(element)
+# for element in position:
+	# print(element)
+
 # print(person)
 
 
