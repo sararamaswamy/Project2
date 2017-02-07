@@ -17,9 +17,10 @@ from bs4 import BeautifulSoup
 base_url = 'http://www.nytimes.com'
 r = requests.get(base_url)
 soup = BeautifulSoup(r.text, "lxml")
+html_text = str(soup)
 
-# ny_times_file = open("nytimes_data.html", "w")
-# ny_times_file.write(soup)
+ny_times_file = open("nytimes_data.html", "w")
+ny_times_file.write(html_text)
 
 
 #####################
@@ -38,7 +39,6 @@ for story_heading in soup.find_all(class_="story-heading"):
     	if headline_count < 10:
         	nytimes_headlines.append(story_heading.contents[0].strip())
         	headline_count = headline_count + 1 
-# print(nytimes_headlines)
 # print(headline_count)
 # print(len(nytimes_headlines)) ##Passes 10 headlines in the list test
 ## Note that you will almost certainly need to do some investigation on the http://nytimes.com website to do this correctly, even after saving the file in Part 1.
@@ -89,42 +89,43 @@ htmldoc = response.text
 
 soup = BeautifulSoup(htmldoc,"html.parser") ## parses/organizes using Beautiful soup by tags
 people = soup.find_all("div",{"class":"views-row"})  #searches for the div tags within the 
-# for element in people:
-# person = soup.find_all("div",{"class":"field-item even"})
 person = soup.find_all("div", class_= "field-item even", property="dc:title")
-umsi_titles = {}
-names_list = []
-descrip_list = [] 
-val = 0
+umsi_titles = {} ## dictionary
+names_list = [] ##name list
+descrip_list = []  ## description of people list
 
-##creates a list of the names 
+
+
+## the following code iterates through everything returned in the html under dc:title, which includes the dc:title tags and then looks for just the <h2> tags
+## it then turns those lines into strings that can be fed into a regex expression to extract just the names of the people without the tags
+## it then appends each of those names to the list "names_list"
+i = 0
 for element in person:
-	# y = re.findall(r'(<h2>[\w] [w\]', str(element.h2)
-	# for item in y:
+
 	y = element.h2 ## gets all the names with h2 tags on either side
-	x = str(y) ## makes all of those strings that can be used in a regex
-	no_h2 = re.findall(r'\w+ \w+\s*\w+-*\w*', x) ## uses regex to get list of the names from between the tags ##ask at office hours how to regex this so it's less hard coded
-	for name in no_h2:
-		if name not in names_list:
-			names_list.append(name)
-# print(names_list)
-
-## Creates a list of the descriptions
+	## makes all of those strings that can be used in a regex
+	# print ("{0}:{1}".format(i, y.text))
+	# i += 1
+	name_wanted = y.text
+	# no_h2 = re.findall(r'\w+ \w+\s*\w+-*\w*', x) ## uses regex to get list of the names from between the tags ##ask at office hours how to regex this so it's less hard coded
+	names_list.append(name_wanted)
 
 
-
-# print(umsi_titles)
+##the following code looks for the elements under the class name with the people's positions. It looks for each of those elements (elements in a list)
+## it then looks for just the items under a more specific class, which returns another, more refined list of the positions, still buried within html tags
+## it turns those lines into strings, which can again be stripped by regex for just the position titles
+## it appends each of those items to the list of descriptions (positions)
 
 position = soup.find_all("div", class_="field field-name-field-person-titles field-type-text field-label-hidden")
 for thing in position:
-	y = thing.find_all(class_="field-item even")
-	x = str(y)
-	no_div = re.findall(r'"field-item even">(.+)<', x)
-	# print(no_div)
-	# print(no_div)
-	# print(len(no_div))
-	for item in no_div:
-		descrip_list.append(item)
+	y = thing.find_all(class_="field-item even") ## this y is not a beautiful soup list, iteratable like a list
+	# x = y.text
+	# no_div = re.findall(r'"field-item even">(.+)<', x)
+	for item in y:
+		descrip_list.append(item.text)
+print(descrip_list)
+
+
 		# if desc not in descrip_list:
 		# 	descrip_list.append(desc)
 # print(descrip_list)
@@ -135,6 +136,8 @@ for thing in position:
 # print(len(names_list))
 # print(descrip_list)
 # print(len(descrip_list))
+
+##this code zips up the parallel lists, creating the desired list of umsi_titles. 
 umsi_titles = dict(zip(names_list, descrip_list))
 
 # print(len(umsi_titles))
