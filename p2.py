@@ -12,6 +12,7 @@
 ## Import statements
 import unittest
 import json
+import re
 import requests
 import tweepy
 import twitter_info # Requires you to have a twitter_info file in this directory
@@ -42,7 +43,7 @@ except:
 
 
 
-## PART 1 - Define a function find_urls.
+## PART 1 - Define a function find_urls. ## Done
 ## INPUT: any string
 ## RETURN VALUE: a list of strings that represents all of the URLs in the input string
 
@@ -53,14 +54,9 @@ except:
 
 all_urls = []
 def find_urls(any_string):
-	regex = r'https[s]?://w*.\w\w+.?\w*'
-	return_urls = re.findall(regex, any_string, re.MULTILINE)
-	for item in return_urls:
-		all_urls.append(item)
-
-
-
-
+	regex = r'http[s]?://\w\w+.\w*.?[.]?co?[.]?\w*'
+	return_urls = re.findall(regex, any_string)
+	return(return_urls)
 
 
 
@@ -74,6 +70,35 @@ def find_urls(any_string):
 
 ## Start with this page: https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All  
 ## End with this page: https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11 
+
+def get_umsi_data():
+	usmi_directory_key = "umsi_directory_data"
+	if usmi_directory_key in CACHE_DICTION:
+		directory_ = CACHE_DICTION["umsi_directory_data"]
+		return(directory_)
+	else:
+		base_url = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All"
+		list_of_htmls = []
+		for i in range(12):
+			if i == 0:
+				resp = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
+				html_item = resp.text
+		# 	soup = BeautifulSoup(html_item,"html.parser")
+				list_of_htmls.append(html_item)
+				# print(list_of_htmls)
+			else:
+				resp2 = requests.get(base_url+"&page="+str(i), headers={'User-Agent': 'SI_CLASS'})
+				html_item2 = resp2.text
+				list_of_htmls.append(html_item2)
+		CACHE_DICTION["umsi_directory_data"] = list_of_htmls
+		f = open(CACHE_FNAME, 'w')
+		f.write(json.dumps(CACHE_DICTION)) 
+		f.close()
+
+
+
+
+
 
 
 
