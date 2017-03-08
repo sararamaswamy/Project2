@@ -200,7 +200,7 @@ for item in five_tweets:
 	for the_string in x:
 		tweet_urls_found.append(the_string)
 
-
+## Ask if it's ok if the five tweets do not contain any htmls
 
 # print("--------tweet_urls_found--------")
 # for item in tweet_urls_found:
